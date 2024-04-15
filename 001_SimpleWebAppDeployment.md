@@ -9,11 +9,17 @@ Create a simple web application as follows.
 1. Go to IntelliJ.
 
 2. In the **Welcome to IntelliJ** window, click on **Create a new
-   project**, choose **Maven Archetype**, add an Archtype
+   project**, choose **Maven Archetype**
 
-   - **groupId:** com.google.appengine.archetypes
-   - **artifactId:** appengine-standard-archetype
-   - **version:** 1.0.2
+   - **Name:** cld-gae
+   - **JDK:** select the JDK 11 installed previously
+   - **Catalog:** Internal (by default)
+
+   * Add an Archtype
+
+      - **GroupId:** com.google.appengine.archetypes -- not displayed ???
+      - **ArtifactId:** appengine-standard-archetype
+      - **Version:** 1.0.2
 
    Advanced Settings:
 
@@ -31,29 +37,45 @@ Create a simple web application as follows.
      frameworks.
 
 3. In the `pom.xml` file add
-   `<appengine.sdk.version>1.9.79</appengine.sdk.version>` at the end
-   of the properties list to set the **Google SDK version**. You must
+   ```
+   <appengine.sdk.version>1.9.79</appengine.sdk.version>  !!! May day
+   ```
+   at the end of the properties list to set the **Google SDK version**. You must
    also set the version of the **maven-deploy-plugin** (line 162) to
-   `3.0.0-M2`. Set the maven compiler settings to 11: `<maven.compiler.source>11</maven.compiler.source>` and `<maven.compiler.target>11</maven.compiler.target>`.
+   `3.0.0-M2`. Set the maven compiler and target to 11:  !!!
+   ```
+   <maven.compiler.source>11</maven.compiler.source>
+   <maven.compiler.target>11</maven.compiler.target>
+   ```
 
-4. Yous must right click on the project root, click on **Open Module
-   Settings**, click on **Modules** and set the language level to 11.
+4. You must right click on the project root, click on **Open    
+   Project Settings**, click on **Modules** and set the language level to 11.
 
-5. Inspect the Servlet the wizard has created: Open the `src` folder
-   that contains the Java source code. Open the
+5. Inspect the Servlet the wizard has created: Open the `src`  
+   folder that contains the Java source code. Open the
    `HelloAppEngine` file. What does the code do?
 
+   ```
+   //TODO
+   ```
+
 6. Note the annotation starting with `@WebServlet` in front of the
-   Servlet. It maps the route `hello` to the Servlet. The mappings are
-   needed by the web application server to route the incoming HTTP
-   requests to the right Servlets.
+   Servlet. It maps the route `hello` to the Servlet. The mappings are needed by the web application server to route the incoming HTTP requests to the right Servlets.
 
 7. In the `webapp/WEB-INF` directory, you have a file called
    `web.xml`. What information does it contain? And what is its use ?
 
+   ```
+   //TODO
+   ```
+
 8. Inspect the Google App Engine configuration file
-   `appengine-web.xml` in `webapp/WEB-INF`. What information does it
-   contain?
+   `appengine-web.xml` in `webapp/WEB-INF`. What information does it contain?
+
+   ```
+   //TODO
+   ```
+
 9. Edit the Google App Engine configuration file as follows:
 
    - Set the `<runtime>` to `java11`.
@@ -62,12 +84,17 @@ Create a simple web application as follows.
 10. In the `webapp` directory you have also the file called
     `index.jsp` spotted in `web.xml`. What is its use ?
 
-Test the web application on your local machine using an application
-server embedded in the Google Cloud SDK as follows:
+    ```
+    //TODO
+    ```
 
-1. Add Google App Engine support by going to **Tools** > **Google Cloud Code** > **App Engine** > **Add App Engine Support** > **Google App Engine Standard**.
+---
 
-2. Create a Local server: **Tools** > **Google Cloud Code** > **App Engine** > **Run on a local App Engine Server**. IntelliJ will ask you to create a run configuration. In the 'Application server' field, select **Google App Engine Standard Local Server**. In the 'Artefact to deploy' field, select 'LabGAE:war exploded' (or the corresponding name, according to your project configuration). Then, click on **Apply** and **OK**.
+### Test the web application on your local machine using an application server embedded in the Google Cloud SDK as follows:
+
+1. Add Google App Engine support by going to **Tools** > **Gemini + Google Cloud Code** > **App Engine** > **Add App Engine Support** > **Google App Engine Standard**.
+
+2. Create a Local server: **Tools** > **Gemini + Google Cloud Code** > **App Engine** > **Run on a local App Engine Server dev server**. IntelliJ will ask you to create a run configuration. In the 'Application server' field, select **Google App Engine Standard Local Server**.  In the 'Artefact to deploy' field, select 'LabGAE:war exploded' (or the corresponding name, according to your project configuration). Then, click on **Apply** and **OK**.
 
 3. Go to the upper right corner of the IDE. You have a list of build destinations. Set the list to **Google App Engine Standard Local Server**. Run the project with the play button on the right. Normally your default browser open automatically on the server home page.
 
@@ -77,14 +104,16 @@ server embedded in the Google Cloud SDK as follows:
 
 6. When you have finished testing, click the red square in the **Services** view or in the upper right corner.
 
-Deploy the web application on Google App Engine as follows:
+---
+
+### Deploy the web application on Google App Engine as follows:
 
 1.  Log into the Cloud Platform console:
     <https://console.cloud.google.com/>. Create a new project called
     `labgae`. Let the location parameter to default.
 
 2.  In IntelliJ go to the list of build destinations, select **Edit
-    Configurations** and select **Google App Engine Deployement**.
+    Configurations** and select **Google App Engine Deployment**.
 
     - In the 'Server' field, select **Create new**.
     - In the deployment list, select **Maven build: LabGAE**.
@@ -104,13 +133,11 @@ Deploy the web application on Google App Engine as follows:
           **Note**: You might need to grant `Storage Object Viewer` permission to your service account (the service account is _not_ your own account. It is a special account linked to your project used by Google. It can be found in the logs if you try to deploy for the first time. More information here <https://cloud.google.com/iam/docs/service-accounts>). To achieve this, go to **Cloud Storage** service and select the bucket that requires to set the permission. In the **Permission** tab, add a new permission where **New principals** is the service account for your project (given in the logs), and the role is `Storage Object Viewer`. Re-run your build configuration and the application should be deployed.
 
         - Observe the messages of the deployment process in the **Run**
-          view, then the **Services** view. You should see a message like
-          this `Deployed service [default] to
+          view, then the **Services** view. You should see a message like this Deployed service [default] to https://20200406t150557-dot-labgae.appspot.com]`. Click on the link to verify that it works.
 
-    [https://20200406t150557-dot-labgae.appspot.com]`. Click on the
-    link to verify that it works.
+---
 
-Test the web application on App Engine:
+### Test the web application on App Engine:
 
 1.  In the Cloud Platform console navigate to the App Engine
     Dashboard. On the right side you should see a link like this
@@ -119,11 +146,26 @@ Test the web application on App Engine:
 
 2.  Navigate to the Servlet and reload it a few times in your browser
     to generate some traffic. Return to the App Engine
-    Dashboard. After some time you should see your requests appear in
-    the dashboard graph.
+    Dashboard. After some time you should see your requests appear in the dashboard graph.
 
 Deliverables:
 
 - What does the sample code generated by the wizard do? Explain what
   you see in the **Java class files**, **web.xml**,
   **appengine-web.xml** and **index.jsp** files in a few sentences.
+
+  ```
+  //TODO Java class files
+  ```
+
+  ```
+  //TODO web.xml
+  ```
+
+  ```
+  //TODO appengine-web.xml
+  ```
+
+  ```
+  //TODO index.jsp
+  ```
